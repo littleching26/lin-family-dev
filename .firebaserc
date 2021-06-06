@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "lin-family"
+  },
+  "targets": {
+    "lin-family": {
+      "hosting": {
+        "lin-family": [
+          "lin-family"
+        ]
+      }
+    }
+  }
+}

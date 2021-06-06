@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'lin-family';
+export class AppComponent implements OnInit{
+ 
+  constructor(){
+    
+  }
+
+  ngOnInit(){
+  }
+
+
 }
