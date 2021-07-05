@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+.text-default{
+    font-size: 4vmin;
+    text-align: left;
+}
+
+input{
+    width: 80%;
+    font-size: 4vmin;
+}
+
+.button-box{
+    justify-content: center;  
+    align-items: center;  
+    display: flex;  
+    width: 100%;
+}
+
+
+.button-box button{
+    margin-left: 5px;
+    font-size: 2.5vmin;
+}
+
+.col-title{
+    /* background-color: #F0FFFF; */
+    text-align: center;
+}
+
+.dialog-title {
+    font-size: 5vmin;
+    text-align: center;
+}
+
+.fc-event {
+    font-size: 3vmin !important;
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: normal !important;
+    overflow: hidden !important;
+}
+
+/** 設定dropDown字體大小 */
+.p-dropdown {
+    border-radius: 20%;
+}
+.p-dropdown-label   {
+    font-size: 3vmin;
+}
+.p-dropdown-item   {
+    font-size: 3vmin;
+}
+
+/** 設定日曆字體大小 */
+.p-inputtext{
+    font-size: 3vmin;
+}
