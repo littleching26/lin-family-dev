@@ -8,7 +8,6 @@ import { Event, FamilySettings } from '../home-page/home-page.model';
 import { Observable } from 'rxjs';
 import { DateUtils } from '../../utils/Date-.utils';
 import { FormGroup, FormBuilder, FormControl, Validators  } from '@angular/forms';
-import { BasicDialogComponent } from '../basic/basic-dialog/basic-dialog.component'
 
 @Component({
   selector: 'app-home-page',
@@ -52,22 +51,32 @@ export class HomePageComponent {
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       defaultDate: DateUtils.getNowDateString(),
+      buttonText: {
+        today: '今天',
+        month: '月',
+        week: '週',
+        day: '日'
+      },
+      locale: 'zh-tw',
       header: {
         left: 'prev,next',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      editable: true,
+      displayEventEnd: true,
+      eventRender: function(info: any) {
+        info.el.querySelector('.fc-title').innerHTML = info.event.extendedProps.name + ' '  +info.event.title;
+        if(info.event.extendedProps.memo != null){
+          info.el.querySelector('.fc-title').innerHTML += '(' + info.event.extendedProps.memo + ')';
+        }
+      } ,
       dateClick: (date: any) => {
-        console.log(date);
         this.eventDialog = true;
-        this.form.controls.start.setValue(date.dateStr + ' 12:00')
+        this.form.controls.start.setValue(date.dateStr + ' 12:00');
       },
       eventClick: (data: any) => {
-        console.log(data.event.id);
         this.eventDialog = true;
         this.form.patchValue(this.events.filter((f: Event) => f.id == data.event.id)[0]);
-        console.log(this.form.getRawValue());
       }
     }
   }
@@ -78,27 +87,27 @@ export class HomePageComponent {
   }
 
   saveEvent() {
-    this.form.controls.backgroundColor.setValue(
-      this.familySettings.filter(f => f.name == this.form.controls.name.value)[0].color
-    );
-    this.homePageService.saveEvent(this.form.getRawValue());
-    this.ngOnInit();
-    this.eventDialog = false;
+    console.log(this.form.controls);
+    if(this.form.valid){
+      this.form.controls.backgroundColor.setValue(
+        this.familySettings.filter(f => f.name == this.form.controls.name.value)[0].color
+      );
+      this.homePageService.saveEvent(this.form.getRawValue());
+      this.ngOnInit();
+      this.eventDialog = false;
+    }else {
+      confirm('每一格都要填唷');
+    }
+    
 
   }
 
   deleteEvent() {
-    console.log('check');
-    this
-    // this.confirmationService.confirm({
-    //   message: '真的要刪除嗎？',
-    //   accept: () => {
-    //     this.homePageService.deleteEvent(this.form.getRawValue());
-    //     this.ngOnInit();
-    //     this.eventDialog = false;
-    //   }
-    // });
-
+    if(confirm("真的要刪除嗎？")) {
+      this.homePageService.deleteEvent(this.form.getRawValue());
+        this.ngOnInit();
+        this.eventDialog = false;
+    }
   }
 
   buildForm() {
@@ -108,7 +117,7 @@ export class HomePageComponent {
       start: new FormControl(null, Validators.required),
       end: new FormControl(null, Validators.required),
       title: new FormControl(null, Validators.required),
-      memo: new FormControl(null, Validators.required),
+      memo: new FormControl(null),
       backgroundColor: new FormControl(null)
     });
   }
