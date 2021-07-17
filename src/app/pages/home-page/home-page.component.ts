@@ -16,22 +16,22 @@ import { FormGroup, FormBuilder, FormControl, Validators  } from '@angular/forms
 })
 export class HomePageComponent {
   items: Observable<any[]> | undefined;
-  events: Event[];
+  events!: Event[];
   options: any;
   eventDialog: boolean = false;
   //家庭成員各種設定
-  familySettings: FamilySettings[];
+  familySettings!: FamilySettings[];
   //家庭成員選單
-  familyGroup: string[];
+  familyGroup!: string[];
   //表單
-  form: FormGroup;
+  form!: FormGroup;
 
   constructor(private homePageService: HomePageService,
     private fb: FormBuilder
     ) {
   }
 
-  @ViewChild('calendar') private calendar: FullCalendar;
+  @ViewChild('calendar') private calendar!: FullCalendar;
 
   ngOnInit() {
     this.buildForm();
