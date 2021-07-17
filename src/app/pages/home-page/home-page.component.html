@@ -1,0 +1,56 @@
+<div class="content-section implementation">
+    <div class="card">
+        <p-fullCalendar [events]="events" [options]="options" #calendar></p-fullCalendar>
+    </div>
+</div>
+
+<p-dialog [(visible)]="eventDialog" [style]="{width: '80vw'}">
+    <ng-template pTemplate="header">
+        <div class="p-grid p-col-12">
+            <div class="dialog-title">新增事件</div>
+        </div>
+    </ng-template>
+    <form [formGroup]="form">
+        <div class="p-grid">
+            <div class="p-col-4 text-default col-title">成員</div>
+            <div class="p-col-8 text-default col-content">
+                <p-dropdown [options]="familyGroup" formControlName="name"></p-dropdown>
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-4 text-default col-title">事件說明</div>
+            <div class="p-col-8 text-default col-content">
+                <input type="text" formControlName="title" pInputText/> 
+                <!-- <control-messages [control]="form.get('title')"></control-messages> -->
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-4 text-default col-title">開始時間</div>
+            <div class="p-col-8 text-default col-content">
+                <p-calendar formControlName="start" dataType="string" [showTime]="true"
+                     appendTo="body" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-4 text-default col-title">結束時間</div>
+            <div class="p-col-8 text-default col-content">
+                <p-calendar formControlName="end" dataType="string" [showTime]="true"
+                    appendTo="body" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-4 text-default col-title">備註</div>
+            <div class="p-col-8 text-default col-content">
+                <textarea [rows]="5" [cols]="50" pInputTextarea formControlName="memo"></textarea>
+            </div>
+        </div>
+    </form>
+    <div class="p-grid">
+        <div class="button-box">
+            <button pButton pRipple type="button" class="p-button-outlined" (click)="saveEvent()">儲存</button>
+            <button *ngIf="this.form.controls.id.value != null" pButton pRipple type="button" class="p-button-outlined" (click)="deleteEvent()">刪除</button>
+            <button pButton pRipple type="button" class="p-button-outlined" (click)="cancelEventDialog()">取消</button>
+        </div>
+    </div>
+</p-dialog>
+
