@@ -25,6 +25,8 @@ export class HomePageComponent {
   familyGroup!: string[];
   //表單
   form!: FormGroup;
+  //背景圖片
+  backgroundImgUrl!: string;
 
   constructor(private homePageService: HomePageService,
     private fb: FormBuilder
@@ -34,6 +36,7 @@ export class HomePageComponent {
   @ViewChild('calendar') private calendar!: FullCalendar;
 
   ngOnInit() {
+    this.backgroundImgUrl = 'assets/images/familyBackgroundImg.jpg'
     this.buildForm();
 
     //取得原有的日曆事件
