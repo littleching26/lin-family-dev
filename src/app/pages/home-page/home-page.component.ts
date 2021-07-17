@@ -72,7 +72,7 @@ export class HomePageComponent {
       } ,
       dateClick: (date: any) => {
         this.eventDialog = true;
-        this.form.controls.start.setValue(date.dateStr + ' 12:00');
+        this.form.controls.start.setValue(date.dateStr + ' 00:00');
       },
       eventClick: (data: any) => {
         this.eventDialog = true;
@@ -92,11 +92,14 @@ export class HomePageComponent {
       this.form.controls.backgroundColor.setValue(
         this.familySettings.filter(f => f.name == this.form.controls.name.value)[0].color
       );
+      if(this.form.controls.end.value == null){
+        this.form.controls.end.setValue(this.form.controls.start.value.split(' ')[0] + ' 23:59');
+      }
       this.homePageService.saveEvent(this.form.getRawValue());
       this.ngOnInit();
       this.eventDialog = false;
     }else {
-      confirm('每一格都要填唷');
+      confirm('事件說明、開始時間一定要填唷，不要偷懶！');
     }
     
 
@@ -113,9 +116,9 @@ export class HomePageComponent {
   buildForm() {
     this.form = this.fb.group({
       id: new FormControl(null),
-      name: new FormControl('老爸', Validators.required),
+      name: new FormControl('老爸'),
       start: new FormControl(null, Validators.required),
-      end: new FormControl(null, Validators.required),
+      end: new FormControl(null),
       title: new FormControl(null, Validators.required),
       memo: new FormControl(null),
       backgroundColor: new FormControl(null)
